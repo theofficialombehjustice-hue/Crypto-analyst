@@ -187,11 +187,35 @@ def signal(df, news_sentiment=0, weight=1):
     pred=ml_model.predict(features_scaled) if hasattr(ml_model,"coef_") else 0
     s+=pred[0] if pred is not None else 0
 
-    if s>=3: d="BUY"
-    elif s<=-3: d="SELL"
-    else:
-        reasons.append("Score not strong enough")
-        return {"signal": None, "reasons": reasons}
+    if s >= 3:
+    d = "BUY"
+    strength = 3
+elif s >= 2:
+    d = "BUY"
+    strength = 2
+elif s >= 1:
+    d = "BUY"
+    strength = 1
+elif s >= 0.1:
+    d = "BUY"
+    strength = 0.1
+
+elif s <= -3:
+    d = "SELL"
+    strength = 3
+elif s <= -2:
+    d = "SELL"
+    strength = 2
+elif s <= -1:
+    d = "SELL"
+    strength = 1
+elif s <= -0.1:
+    d = "SELL"
+    strength = 0.1
+
+else:
+    reasons.append("Score not strong enough")
+    return {"signal": None, "reasons": reasons}
 
     p=last["c"]; atr=last["ATR"]
     sl_offset = atr*1.5*np.clip(1+atr_pct/10,1,2)
