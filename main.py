@@ -43,7 +43,9 @@ def evaluate_signal(score):
         return "Moderate Signal ⚡"
     elif score >= 1:
         return "Weak Signal ⚠️"
-    else:
+   elif score >= 0.0001:
+        return "signal not advisable 🇳🇬"
+   else:
         return "No strong signals right now"
 
 def session_ok():
